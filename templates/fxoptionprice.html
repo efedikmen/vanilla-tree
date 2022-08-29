@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Inputs for Underlying FX pair
+{% endblock %}
+
+{% block main %}
+<form action="/fxoptionprice" method="post">
+    <table class="table table-bordered">
+        <thead>
+            <th colspan="2" style="text-align:center"> Pricing FX Option </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td  scope="col">Choose the option: </td>
+                <td style="text-align:center" scope="col">
+                    <div class="btn-group" role="group" aria-label="option type" id="option_type">
+                    <input type="radio" class="btn-check" name="option type" id="call" autocomplete="off" value="Call" checked>
+                    <label class="btn btn-outline-primary" for="call">Call</label>
+
+                    <input type="radio" class="btn-check" name="option type" id="put" autocomplete="off" value="Put">
+                    <label class="btn btn-outline-primary" for="put">Put</label>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td scope="col">Spot Exchange Rate($):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="current" name="current" placeholder="Spot Price" type="text"></td>
+            </tr>
+            <tr>
+                <td scope="col"> Strike Exchange Rate($):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="strike" name="strike" placeholder="Strike Price" type="text"></td>
+            </tr>
+            <tr>
+                <td>Time to maturity(days):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="days" name="days" placeholder="In calendar days" type="text"></td>
+            </tr>
+            <tr>
+                <td> Country 1 Risk Free Rate(%):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="rate" name="rate" placeholder="Enter 3 for 3%" type="text"></td>
+            </tr>
+            <tr>
+                <td> Country 2 Risk Free Rate(%):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="frate" name="frate" placeholder="Enter 3 for 3%" type="text"></td>
+            </tr>
+            <tr>
+                <td> Volatility(%):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="vol" name="vol" placeholder="Enter 50 for 50%" type="text"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center"><button class="btn btn-primary" type="submit" id="send" disabled="disabled">Price</button></td>
+            </tr>
+        </tbody>
+    </table>
+        <p style="text-align:center">The submit button will be enabled once all fields are filled</p>
+</form>
+<script>
+    /* to disable the submit button until all fields are filled */
+    let strike = document.getElementById("strike");
+    let current = document.getElementById("current");
+    let days = document.getElementById("days");
+    let rate = document.getElementById("rate");
+    let frate = document.getElementById("frate");
+    let vol = document.getElementById("vol");
+    let send = document.getElementById("send");
+
+    send.disabled = true;
+    strike.addEventListener("change", stateHandle);
+    days.addEventListener("change", stateHandle);
+    rate.addEventListener("change", stateHandle);
+    frate.addEventListener("change", stateHandle);
+    vol.addEventListener("change", stateHandle);
+    current.addEventListener("change", stateHandle);
+
+    function stateHandle() {
+        var send = document.getElementById("send");
+        if(document.getElementById("strike").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("current").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("days").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("rate").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("frate").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("vol").value === "") {
+            send.disabled = true;
+        }
+        else {
+            send.disabled= false;
+        }
+    }
+
+</script>
+{% endblock %}

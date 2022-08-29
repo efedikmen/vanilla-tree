@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block main %},
+<center>
+<h1>Welcome to <b style="color:purple">Vanilla Tree</b></h1>
+<h3>the free vanilla European options calculator</h3>
+<br></br>
+<form action="/" method="post">
+</center>
+    <div class="mb-3">
+       <p>Choose the underlying security for the option</p>
+        <select name="underlying">
+            <option disabled selected> </option>
+            <option value = "Stock"> Stock </option>
+            <option value = "Futures"> Futures </option>
+            <option value = "FX"> Foreign Exchange </option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" name="submit_btn" value="price" type="submit">Price</button>
+        <button class="btn btn-primary" name="submit_btn" value="ivol" type="submit">Implied Volatility</button>
+    </div>
+</form>
+<p></p>
+{% endblock %}

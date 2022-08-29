@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Inputs for Underlying Stock
+{% endblock %}
+
+{% block main %}
+<form action="/futuresiv" method="post">
+    <table class="table table-bordered">
+        <thead>
+            <th colspan="2" style="text-align:center"> IV of Stock Option </th>
+        </thead>
+        <tbody>
+            <tr>
+                <td  scope="col">Choose the option: </td>
+                <td style="text-align:center" scope="col">
+                    <div class="btn-group" role="group" aria-label="option type" id="option_type">
+                    <input type="radio" class="btn-check" name="option type" id="call" autocomplete="off" value="Call" checked>
+                    <label class="btn btn-outline-primary" for="call">Call</label>
+
+                    <input type="radio" class="btn-check" name="option type" id="put" autocomplete="off" value="Put">
+                    <label class="btn btn-outline-primary" for="put">Put</label>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td scope="col">Current Price($):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="current" name="current" placeholder="Spot Price" type="text"></td>
+            </tr>
+            <tr>
+                <td scope="col"> Strike Price($):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="strike" name="strike" placeholder="Strike Price" type="text"></td>
+            </tr>
+            <tr>
+                <td>Time to maturity(days):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="days" name="days" placeholder="In calendar days" type="text"></td>
+            </tr>
+            <tr>
+                <td> Risk Free Rate(%):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="rate" name="rate" placeholder="Enter 3 for 3%" type="text"></td>
+            </tr>
+            <tr>
+                <td> Option Value($):</td>
+                <td><input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="value" name="value" placeholder="Value of a contract" type="text"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center"><button class="btn btn-primary" type="submit" id="send" disabled="disabled">Calculate Implied Volatility</button></td>
+            </tr>
+        </tbody>
+    </table>
+        <p style="text-align:center">The submit button will be enabled once all fields are filled</p>
+</form>
+<script>
+    /* to disable the submit button until all fields are filled */
+    let strike = document.getElementById("strike");
+    let current = document.getElementById("current");
+    let days = document.getElementById("days");
+    let rate = document.getElementById("rate");
+    let val = document.getElementById("value");
+    let send = document.getElementById("send");
+
+    send.disabled = true;
+    strike.addEventListener("change", stateHandle);
+    days.addEventListener("change", stateHandle);
+    rate.addEventListener("change", stateHandle);
+    val.addEventListener("change", stateHandle);
+    current.addEventListener("change", stateHandle);
+
+    function stateHandle() {
+        var send = document.getElementById("send");
+        if(document.getElementById("strike").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("current").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("days").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("rate").value === "") {
+            send.disabled = true;
+        }
+        else if(document.getElementById("value").value === "") {
+            send.disabled = true;
+        }
+        else {
+            send.disabled= false;
+        }
+    }
+
+</script>
+{% endblock %}
